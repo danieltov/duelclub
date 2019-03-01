@@ -1,0 +1,34 @@
+/* Card Styles */
+
+.card {
+  cursor: pointer;
+}
+
+/* House Colors */
+.text-gryffindor {
+  color: #ffc500;
+}
+.bg-gryffindor {
+  background: #7f0909;
+}
+
+.text-hufflepuff {
+  color: #000;
+}
+.bg-hufflepuff {
+  background: #eee117;
+}
+
+.text-ravenclaw {
+  color: #946b2d;
+}
+.bg-ravenclaw {
+  background: #000a90;
+}
+
+.text-slytherin {
+  color: #aaa;
+}
+.bg-slytherin {
+  background: #0d6217;
+}

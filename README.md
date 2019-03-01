@@ -1,2 +1,3 @@
-# pokebattle
-Unit 4 game
+# Hogwarts Duel Club
+
+This is my take on a click-based brawler game. Harry Potter-themed.
