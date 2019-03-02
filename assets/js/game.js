@@ -154,7 +154,7 @@ let go = {
               go.opponent.name
             }</strong> with <strong><em>magic</em></strong>!`
           );
-        $(".container").append(murderButton);
+        $(murderButton).insertBefore("#duelists");
         go.game();
       } else {
         $("#attack").on("click", function() {
