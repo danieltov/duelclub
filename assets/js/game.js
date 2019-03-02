@@ -5,28 +5,28 @@ const duelists = [
     house: "gryffindor",
     hp: 95,
     curse: 25,
-    counter: 40
+    counter: 35
   },
   {
     name: `Cedric Diggory`,
     house: "hufflepuff",
     hp: 110,
     curse: 20,
-    counter: 36
+    counter: 30
   },
   {
     name: `Luna Lovegood`,
     house: "ravenclaw",
     hp: 85,
     curse: 30,
-    counter: 5
+    counter: 40
   },
   {
     name: `Draco Malfoy`,
     house: "slytherin",
     hp: 100,
     curse: 30,
-    counter: 35
+    counter: 40
   }
 ];
 
@@ -168,7 +168,7 @@ let go = {
     $("." + go.opponent.house + " span.hp").text(
       go.opponent.hp < 1 ? "Super Dead" : go.opponent.hp
     );
-    go.player.curse += 50;
+    go.player.curse += Math.floor(Math.random() * 20) + 15;
     $("." + go.player.house + " span.curse").text(Math.ceil(go.player.curse));
     if (go.opponent.hp > 0) {
       go.player.hp -= go.opponent.counter;
