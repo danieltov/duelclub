@@ -98,19 +98,19 @@ let go = {
     let playerHouse = undefined;
     if ($(c).hasClass("gryffindor")) {
       playerHouse = "gryffindor";
-      $(c).addClass("disabled");
+      $(c).addClass("selected");
     }
     if ($(c).hasClass("hufflepuff")) {
       playerHouse = "hufflepuff";
-      $(c).addClass("disabled");
+      $(c).addClass("selected");
     }
     if ($(c).hasClass("ravenclaw")) {
       playerHouse = "ravenclaw";
-      $(c).addClass("disabled");
+      $(c).addClass("selected");
     }
     if ($(c).hasClass("slytherin")) {
       playerHouse = "slytherin";
-      $(c).addClass("disabled");
+      $(c).addClass("selected");
     }
     if (go.playerChosen && !go.opponentChosen) {
       go.player = duelists.find(duelist => duelist.house === playerHouse);
@@ -137,7 +137,7 @@ let go = {
       if (!go.duelStarted) {
         go.duelStarted = true;
         $(".duelist").each(function() {
-          if ($(this).hasClass("disabled")) {
+          if ($(this).hasClass("selected")) {
             $(this).css("opacity", "1");
           } else {
             $(this).fadeOut("slow");
@@ -188,7 +188,7 @@ let go = {
     go.opponentChosen = false;
     go.duelStarted = false;
     $(".duelist").each(function() {
-      if (!$(this).hasClass("disabled")) $(this).fadeIn();
+      if (!$(this).hasClass("selected")) $(this).fadeIn();
     });
     go.characterSelect();
   }
