@@ -10,6 +10,12 @@
   transition: opacity 500ms ease;
 }
 
+.hp,
+.curse,
+.counter {
+  font-weight: 900;
+}
+
 /* House Colors */
 .text-gryffindor {
   color: #ffc500;
@@ -37,4 +43,11 @@
 }
 .bg-slytherin {
   background: #0d6217;
+}
+
+/* Button styles */
+
+.btn.btn-lg.btn-block.bg-dark:hover {
+  background-color: #a91e2c !important;
+  transition: background-color 0.4s linear;
 }
