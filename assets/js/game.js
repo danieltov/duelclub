@@ -5,28 +5,28 @@ const duelists = [
     house: "gryffindor",
     hp: 95,
     curse: 25,
-    counter: 40
+    counter: 35
   },
   {
     name: `Cedric Diggory`,
     house: "hufflepuff",
     hp: 110,
     curse: 20,
-    counter: 36
+    counter: 30
   },
   {
     name: `Luna Lovegood`,
     house: "ravenclaw",
-    hp: `85`,
-    curse: `30`,
-    counter: `35`
+    hp: 85,
+    curse: 30,
+    counter: 40
   },
   {
     name: `Draco Malfoy`,
     house: "slytherin",
-    hp: `100`,
-    curse: `30`,
-    counter: `35`
+    hp: 100,
+    curse: 30,
+    counter: 40
   }
 ];
 
@@ -165,18 +165,20 @@ let go = {
   },
   attack: function() {
     go.opponent.hp -= go.player.curse;
-    console.log("Opponent's HP: " + go.opponent.hp);
-    go.player.curse += 50;
-    console.log("Your curse power: " + Math.ceil(go.player.curse));
+    $("." + go.opponent.house + " span.hp").text(
+      go.opponent.hp < 1 ? "Super Dead" : go.opponent.hp
+    );
+    go.player.curse += Math.floor(Math.random() * 20) + 15;
+    $("." + go.player.house + " span.curse").text(Math.ceil(go.player.curse));
     if (go.opponent.hp > 0) {
       go.player.hp -= go.opponent.counter;
-      console.log("Your HP: " + go.player.hp);
+      $("." + go.player.house + " span.hp").text(go.player.hp);
     } else {
       go.switchOut();
     }
   },
   switchOut: function() {
-    $("." + go.opponent.house).slideUp("slow");
+    $("." + go.opponent.house).addClass("animated rotateOutDownLeft");
     $("#attack").remove();
     $("#playerSelectionTitle").html(
       `Good job, <strong class="text-white bg-${go.player.house}">${
@@ -190,6 +192,10 @@ let go = {
     });
     go.characterSelect();
   }
+};
+
+const evilVoice = {
+  /* Put long text elements in here */
 };
 
 $(function() {
