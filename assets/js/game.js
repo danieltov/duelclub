@@ -2,7 +2,7 @@
 
 TODOs:
 
-  * Add visuals to denote power
+  * Break big functions into small ones.
   * Store evil messages in an object to make code more readable.
 
 
@@ -70,7 +70,11 @@ let go = {
     $("#duelists").append(duelistHTML);
     /* start game */
     go.game();
-    console.log("init() ran");
+  },
+  reset: function() {
+    setTimeout(function() {
+      go.init();
+    }, 2500);
   },
   game: function() {
     if (this.duelStarted) {
@@ -78,11 +82,9 @@ let go = {
     } else {
       this.characterSelect();
     }
-    console.log("game() ran");
   },
   characterSelect: function() {
     $(".duelist").on("click", function() {
-      console.log("clicked on a card");
       if (!go.playerChosen) {
         go.playerChosen = true;
         go.setCharacter($(this));
@@ -92,7 +94,6 @@ let go = {
       }
       go.duel();
     });
-    console.log("characterSelect() ran");
   },
   setCharacter: function(c) {
     let playerHouse = undefined;
@@ -133,7 +134,6 @@ let go = {
       );
       return;
     }
-    console.log("setCharacter() ran");
   },
   duel: function() {
     if (go.playerChosen && go.opponentChosen) {
@@ -162,17 +162,23 @@ let go = {
         go.duel();
       } /* duel is started */ else {
         $("#attack").on("click", function() {
-          console.log("attack button clicked");
           go.attack();
         });
       }
     }
-    console.log("duel() ran");
   },
   attack: function() {
-    // player attacks
+    this.playerAttack();
+    this.playerPowerUp();
+    this.opponentAttack();
+    if (this.player.hp <= 0) {
+      this.playerDied();
+      this.reset();
+    }
+  },
+  playerAttack: function() {
     this.opponent.hp -= this.player.curse;
-    // print stats update
+    // print updates
     $("." + this.opponent.house + " span.hp")
       .fadeOut("fast")
       .delay(200)
@@ -182,10 +188,10 @@ let go = {
         } <i class="fas fa-level-down-alt"></i>`
       )
       .fadeIn();
-
-    // player's power surges
+  },
+  playerPowerUp: function() {
     this.player.curse += Math.floor(Math.random() * 20) + 15;
-    // print stats update
+    //print updates
     $("." + this.player.house + " span.curse")
       .fadeOut("fast")
       .delay(200)
@@ -193,8 +199,8 @@ let go = {
         `${Math.ceil(this.player.curse)} <i class="fas fa-level-up-alt"></i>`
       )
       .fadeIn();
-
-    // if opponent alive, they attack
+  },
+  opponentAttack: function() {
     if (this.opponent.hp > 0) {
       this.player.hp -= this.opponent.counter;
       // print stats update
@@ -206,33 +212,26 @@ let go = {
     } /* opponent died */ else {
       this.switchOut();
     }
-
-    // if player died
-    if (this.player.hp <= 0) {
-      $("." + this.player.house + " span.hp")
-        .fadeOut("fast")
-        .delay(200)
-        .text(this.player.hp < 1 ? "Super Dead" : this.opponent.hp)
-        .fadeIn();
-      // hide cards
-      $(".duelist").addClass("d-none");
-      $("#attack").remove();
-      //update evil message
-      $("#playerSelectionTitle").html(
-        `You died, <strong class="text-white bg-${go.player.house}">${
-          go.player.name
-        }</strong>. Loser.`
-      );
-      setTimeout(function() {
-        go.init();
-      }, 2500);
-    }
-    console.log("attack() ran");
+  },
+  playerDied: function() {
+    // print update
+    $("." + this.player.house + " span.hp")
+      .fadeOut("fast")
+      .text(this.player.hp < 1 ? "Super Dead" : this.opponent.hp)
+      .fadeIn();
+    // hide cards
+    $(".duelist").addClass("d-none");
+    $("#attack").remove();
+    //update evil message
+    $("#playerSelectionTitle").html(
+      `You died, <strong class="text-white bg-${go.player.house}">${
+        go.player.name
+      }</strong>. Loser.`
+    );
   },
   switchOut: function() {
     go.duelStarted = false;
     this.bodyCount++;
-    console.log("Body Count: " + this.bodyCount);
     if (this.bodyCount === 3) {
       $(".duelist").addClass("d-none");
       $("#attack").remove();
@@ -242,11 +241,7 @@ let go = {
           go.player.name
         }</strong>. You killed all your friends.`
       );
-      setTimeout(function() {
-        //location.reload();
-
-        go.init();
-      }, 2500);
+      this.reset();
     } else {
       $("." + go.opponent.house).addClass("animated rotateOutDownLeft");
       $("#attack").remove();
@@ -263,7 +258,6 @@ let go = {
         if (!$(this).hasClass("selected")) $(this).fadeIn();
       });
     }
-    console.log("switchOut() ran");
   }
 };
 
