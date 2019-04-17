@@ -1,6 +1,6 @@
 # Murderous Wizard Children Club
 
-This is my take on a click-based brawler game. Harry Potter-themed.
+This is my take on a click-based brawler game. Harry Potter-themed, of course.
 
 ### Here's how the app works:
 
